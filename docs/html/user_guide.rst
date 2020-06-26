@@ -877,9 +877,9 @@ In the second case, pip will automatically find a version of both
 -  ``packageB 4.3.0`` which *also* depends on ``packageC 2.6.1``
 
 If you want to prioritise one package over another, you can add version
-specifiers to *only* the more important package:
+specifiers to *only* the more important package::
 
-``pip install packageA==0.44.1b0 packageB``
+    pip install packageA==0.44.1b0 packageB
 
 This will result in: - ``packageA 0.44.1b0``, which depends on
 ``packageC 2.6.1`` - ``packageB 4.1.3`` which also depends on
