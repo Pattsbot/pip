@@ -924,7 +924,7 @@ Getting help
 If none of the suggestions above work for you, we recommend that you ask
 for help on:
 
--  `Python user discuss <https://discuss.python.org/c/users/7>`__
+-  `Python user Discourse <https://discuss.python.org/c/users/7>`__
 -  `Python user forums <https://www.python.org/community/forums/>`__
 -  `Python developers Slack channel <https://pythondev.slack.com/>`__
 -  `Python IRC <https://www.python.org/community/irc/>`__
