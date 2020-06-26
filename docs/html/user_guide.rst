@@ -898,9 +898,10 @@ your *downstream dependency* by:
 -  Requesting that the package maintainers loosen *their* dependencies
 -  Forking the package and loosening the dependencies yourself
 
-Warning: If you choose to fork the package yourself, you are *opting
-out* of any support provided by the package maintainers. Proceed at your
-own risk!
+.. warning::
+
+   If you choose to fork the package yourself, you are *opting out* of
+   any support provided by the package maintainers. Proceed at your own risk!
 
 4. All requirements are loose, but a solution does not exist
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
