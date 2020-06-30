@@ -791,19 +791,21 @@ like this:
 
 ::
 
-    pip install packageA==0.44.1 packageB==4.3.0
-    Due to conflicting dependencies pip cannot install packageA and packageB:
-    - packageA depends on packageC<3.0.0,>=2.4.2
-    - packageB depends on packageC==2.3.1
+    pip install package_coffee==0.44.1 package_tea==4.3.0
+    Due to conflicting dependencies pip cannot install package_coffee and
+    package_tea:
+    - package_coffee depends on package_water<3.0.0,>=2.4.2
+    - package_tea depends on package_water==2.3.1
 
 In this example, pip cannot install the packages you have requested,
 because they each depend on different versions of the same package
-(``packageC``):
+(``package_water``):
 
--  ``packageA`` version ``0.44.1`` depends on a version of ``packageC``
-   that is less than ``3.0.0`` but greater than or equal to ``2.4.2``
--  ``packageB`` version ``4.3.0`` depends on version ``2.3.1`` of
-   ``packageC``
+-  ``package_coffee`` version ``0.44.1`` depends on a version of
+``package_water`` that is less than ``3.0.0`` but greater than or equal to
+``2.4.2``
+-  ``package_tea`` version ``4.3.0`` depends on version ``2.3.1`` of
+   ``package_water``
 
 Sometimes these messages are straightforward to read, because they use
 commonly understood comparison operators to specify the required version
@@ -842,58 +844,59 @@ The solution to your error will depend on your individual use case. Here
 are some things to try:
 
 1. Audit your top level requirements
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 As a first step it is useful to audit your project and remove any
-unneccessary or out of date requirements. Removing these can
-significantly reduce the complexity of your dependency tree, thereby
-reducing opportunities for conflicts to occur.
+unnecessary or out of date requirements (e.g. from your ``setup.py`` or
+``requirements.txt`` files). Removing these can significantly reduce the
+complexity of your dependency tree, thereby reducing opportunities for
+conflicts to occur.
 
 2. Loosen your top level requirements
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Sometimes the packages that you have asked pip to install are
 incompatible because you have been too strict when you specified the
 package version.
 
-In our first example both ``packageA`` and ``packageB`` have been
+In our first example both ``package_coffee`` and ``package_tea`` have been
 *pinned* to use specific versions
-(``packageA==0.44.1b0 packageB==4.3.0``).
+(``package_coffee==0.44.1b0 package_tea==4.3.0``).
 
-To find a version of both ``packageA`` and ``packageB`` that depend on
-the same version of ``packageC``, you might consider:
+To find a version of both ``package_coffee`` and ``package_tea`` that depend on
+the same version of ``package_water``, you might consider:
 
 -  Loosening the range of packages that you are prepared to install
-   (e.g. ``pip install "packageA>0.44.*" "packageB>4.0.0"``)
--  Asking pip to install *any* version of ``packageA`` and ``packageB``
+   (e.g. ``pip install "package_coffee>0.44.*" "package_tea>4.0.0"``)
+-  Asking pip to install *any* version of ``package_coffee`` and ``package_tea``
    by removing the version specifiers altogether (e.g.
-   ``pip install packageA packageB``)
+   ``pip install package_coffee package_tea``)
 
 In the second case, pip will automatically find a version of both
-``packageA`` and ``packageB`` that depend on the same version of
-``packageC``, installing:
+``package_coffee`` and ``package_tea`` that depend on the same version of
+``package_water``, installing:
 
--  ``packageA 0.46.0b0``, which depends on ``packageC 2.6.1``
--  ``packageB 4.3.0`` which *also* depends on ``packageC 2.6.1``
+-  ``package_coffee 0.46.0b0``, which depends on ``package_water 2.6.1``
+-  ``package_tea 4.3.0`` which *also* depends on ``package_water 2.6.1``
 
-If you want to prioritise one package over another, you can add version
+If you want to prioritize one package over another, you can add version
 specifiers to *only* the more important package::
 
-    pip install packageA==0.44.1b0 packageB
+    pip install package_coffee==0.44.1b0 package_tea
 
-This will result in: - ``packageA 0.44.1b0``, which depends on
-``packageC 2.6.1`` - ``packageB 4.1.3`` which also depends on
-``packageC 2.6.1``
+This will result in: - ``package_coffee 0.44.1b0``, which depends on
+``package_water 2.6.1`` - ``package_tea 4.1.3`` which also depends on
+``package_water 2.6.1``
 
 Now that you have resolved the issue, you can repin the compatible
 package versions as required.
 
-3. Loosen the requirements of your downstream dependencies
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+3. Loosen the requirements of your dependencies
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Assuming that you cannot resolve the conflict by loosening the version
 of the package you require (as above), you can try to fix the issue on
-your *downstream dependency* by:
+your *dependency* by:
 
 -  Requesting that the package maintainers loosen *their* dependencies
 -  Forking the package and loosening the dependencies yourself
@@ -904,17 +907,15 @@ your *downstream dependency* by:
    any support provided by the package maintainers. Proceed at your own risk!
 
 4. All requirements are loose, but a solution does not exist
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Sometimes it's simply impossible to find a combination of package
-versions that do not conflict. Welcome to `dependency
-hell <https://en.wikipedia.org/wiki/Dependency_hell>`__.
+versions that do not conflict. Welcome to `dependency hell`_.
 
 In this situation, you could consider:
 
 -  Using an alternative package, if that is acceptable for your project.
-   See `Awesome Python <https://python.libhunt.com/>`__ for similar
-   packages.
+   See `Awesome Python`_ for similar packages.
 -  Refactoring your project to reduce the number of dependencies (for
    example, by breaking up a monolithic code base into smaller pieces)
 
@@ -924,21 +925,27 @@ Getting help
 If none of the suggestions above work for you, we recommend that you ask
 for help on:
 
--  `Python user Discourse <https://discuss.python.org/c/users/7>`__
--  `Python user forums <https://www.python.org/community/forums/>`__
--  `Python developers Slack channel <https://pythondev.slack.com/>`__
--  `Python IRC <https://www.python.org/community/irc/>`__
--  `Stack
-   Overflow <https://stackoverflow.com/questions/tagged/python>`__
+-  `Python user Discourse`_
+-  `Python user forums`_
+-  `Python developers Slack channel`_
+-  `Python IRC`_
+-  `Stack Overflow`_
 
-See `"How do I ask a good
-question?" <https://stackoverflow.com/help/how-to-ask>`__ for tips on
-asking for help.
+See `"How do I ask a good question?"`_ for tips on asking for help.
 
 Unfortunately, **the pip team cannot provide support for individual
 dependency conflict errors**. Please *only* open a ticket on the `pip
-issue tracker <https://github.com/pypa/pip/issues>`__ if you believe
-that your problem has exposed a bug in pip.
+issue tracker`_ if you believe that your problem has exposed a bug in pip.
+
+.. _dependency hell: https://en.wikipedia.org/wiki/Dependency_hell>
+.. _Awesome Python: https://python.libhunt.com/
+.. _Python user Discourse: https://discuss.python.org/c/users/7
+.. _Python user forums: https://www.python.org/community/forums/
+.. _Python developers Slack channel: https://pythondev.slack.com/
+.. _Python IRC: https://www.python.org/community/irc/
+.. _Stack Overflow: https://stackoverflow.com/questions/tagged/python
+.. _"How do I ask a good question?": https://stackoverflow.com/help/how-to-ask
+.. _pip issue tracker: https://github.com/pypa/pip/issues
 
 Using pip from your program
 ===========================
