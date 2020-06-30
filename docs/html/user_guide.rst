@@ -775,7 +775,7 @@ archives are built with identical packages.
 Fixing conflicting dependencies
 ===============================
 
-The purpose of this setion of documentation is to provide practical suggestions to
+The purpose of this section of documentation is to provide practical suggestions to
 pip users who encounter an error where pip cannot install their
 specified packages due to conflicting dependencies (a
 ``ResolutionImpossible`` error).
@@ -792,6 +792,9 @@ like this:
 ::
 
     pip install package_coffee==0.44.1 package_tea==4.3.0
+
+::
+
     Due to conflicting dependencies pip cannot install package_coffee and
     package_tea:
     - package_coffee depends on package_water<3.0.0,>=2.4.2
@@ -801,11 +804,11 @@ In this example, pip cannot install the packages you have requested,
 because they each depend on different versions of the same package
 (``package_water``):
 
--  ``package_coffee`` version ``0.44.1`` depends on a version of
-``package_water`` that is less than ``3.0.0`` but greater than or equal to
-``2.4.2``
--  ``package_tea`` version ``4.3.0`` depends on version ``2.3.1`` of
-   ``package_water``
+- ``package_coffee`` version ``0.44.1`` depends on a version of
+  ``package_water`` that is less than ``3.0.0`` but greater than or equal to
+  ``2.4.2``
+- ``package_tea`` version ``4.3.0`` depends on version ``2.3.1`` of
+  ``package_water``
 
 Sometimes these messages are straightforward to read, because they use
 commonly understood comparison operators to specify the required version
@@ -814,25 +817,27 @@ commonly understood comparison operators to specify the required version
 However, Python packaging also supports some more complex ways for
 specifying package versions (e.g. ``~=`` or ``*``):
 
-+------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Operator   | Description                                                                                                                                                           | Example                                                                                                                                                       |
-+============+=======================================================================================================================================================================+===============================================================================================================================================================+
-| ``>``      | Any version greater than the specified version                                                                                                                        | **``>3.1``:** any version greater than ``3.1``                                                                                                                |
-+------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``<``      | Any version less than the specified version                                                                                                                           | **``<3.1``:** any version less than ``3.1``                                                                                                                   |
-+------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``<=``     | Any version less than or equal to the specified version                                                                                                               | **``<=3.1``:** any version less than or equal to ``3.1``                                                                                                      |
-+------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``>=``     | Any version greater than or equal to the specified version                                                                                                            | **``>=3.1``:** version ``3.1`` and greater                                                                                                                    |
-+------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``==``     | Exactly the specified version                                                                                                                                         | **``==3.1``:** only version ``3.1``                                                                                                                           |
-+------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``!=``     | Any version not equal to the specified version                                                                                                                        | **``!=3.1``:** any version other than ``3.1``                                                                                                                 |
-+------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``~=``     | Any compatible release. Compatible releases are releases that are within the same major or minor version, assuming the package author is using semantic versioning.   | **``~=3.1``:** version ``3.1`` or later, but not version ``4.0`` or later. **``~=3.1.2``:** version ``3.1.2`` or later, but not version ``3.2.0`` or later.   |
-+------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``*``      | Can be used at the end of a version number to represent "all"                                                                                                         | **``== 3.1.*``:** any version that starts with ``3.1``. Equivalent to ``~=3.1.0``.                                                                            |
-+------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+.. csv-table::
+  :header: "Operator", "Description", "Example"
+
+  ``>``, "Any version greater than the specified version", "``>3.1``: any
+  version greater than 3.1"
+  ``<``, "Any version less than the specified version", "``<3.1``: any version
+  less than ``3.1``"
+  ``<=``, "Any version less than or equal to the specified version", "``<=3.1``:
+  any version less than or equal to ``3.1``"
+  ``>=``, "Any version greater than or equal to the specified
+  version", "``>=3.1``: version ``3.1`` and greater"
+  ``==``, "Exactly the specified version", ``==3.1``: only version ``3.1``
+  ``!=``, "Any version not equal to the specified version", "``!=3.1``: any
+  version other than ``3.1``"
+  ``~=``, "Any compatible release. Compatible releases are releases that are
+  within the same major or minor version, assuming the package author is using
+  semantic versioning.", "``~=3.1``: version ``3.1`` or later, but not version
+  ``4.0`` or later. ``~=3.1.2``: version ``3.1.2`` or later, but not
+  version ``3.2.0`` or later."
+  ``*``,Can be used at the end of a version number to represent "all", "``== 3.
+  1.*``: any version that starts with ``3.1``. Equivalent to ``~=3.1.0``."
 
 The detailed specification of supported comparison operators can be
 found in :pep:`440`.
@@ -884,9 +889,10 @@ specifiers to *only* the more important package::
 
     pip install package_coffee==0.44.1b0 package_tea
 
-This will result in: - ``package_coffee 0.44.1b0``, which depends on
-``package_water 2.6.1`` - ``package_tea 4.1.3`` which also depends on
-``package_water 2.6.1``
+This will result in:
+
+- ``package_coffee 0.44.1b0``, which depends on ``package_water 2.6.1``
+- ``package_tea 4.1.3`` which also depends on ``package_water 2.6.1``
 
 Now that you have resolved the issue, you can repin the compatible
 package versions as required.
